@@ -1,25 +1,25 @@
 {
   "project_info": {
-    "project_number": "584132355184",
-    "project_id": "firebase-app-museos"
+    "project_number": "480537394409",
+    "project_id": "app-museos-a93c0"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:584132355184:android:9824016e98e761a8",
+        "mobilesdk_app_id": "1:480537394409:android:9824016e98e761a8",
         "android_client_info": {
           "package_name": "es.udc.apm.museos"
         }
       },
       "oauth_client": [
         {
-          "client_id": "584132355184-fcqb9fsh54llgp88o9k8p3llerfo3jhm.apps.googleusercontent.com",
+          "client_id": "480537394409-j1hhqt6i2ie6ffluvn5re59943bi10rk.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBDhpsBwgJGyYeV8hM94D4d_mI4tX90sik"
+          "current_key": "AIzaSyBVufONLYmn5dilNCxLqaJsitvDirsikdg"
         }
       ],
       "services": {
