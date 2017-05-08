@@ -3,14 +3,20 @@ package es.udc.apm.museos.view.activity;
 import org.androidannotations.annotations.EActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 
 import com.unity3d.player.UnityPlayer;
+
+import es.udc.apm.museos.R;
 
 @EActivity
 public class ARCameraActivity extends Activity
@@ -26,7 +32,25 @@ public class ARCameraActivity extends Activity
 		getWindow().setFormat(PixelFormat.RGBX_8888); // <--- This makes xperia play happy
 
 		mUnityPlayer = new UnityPlayer(this);
-		setContentView(mUnityPlayer);
+		setContentView(R.layout.avitivy_arcamera);
+
+		RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.mainARLayout);
+
+		mainLayout.addView(mUnityPlayer);
+
+        Button button = new Button(this);
+        button.setText("Go to map");
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ARCameraActivity.this, MapActivity.class);
+                startActivity(i);
+            }
+        });
+
+        mainLayout.addView(button);
+
 		mUnityPlayer.requestFocus();
 	}
 
