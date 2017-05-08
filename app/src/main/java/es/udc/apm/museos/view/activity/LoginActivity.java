@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+
 import es.udc.apm.museos.R;
 import es.udc.apm.museos.presenter.LoginPresenter;
 import es.udc.apm.museos.presenter.LoginPresenterMock;
@@ -16,14 +18,15 @@ import es.udc.apm.museos.view.LoginView;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 @EActivity
 public class LoginActivity extends AppCompatActivity implements LoginView {
 
-    private static final String clientId = "480537394409-sfhu3hcvhupalgug7hpgf9r7vp8fqdp9.apps.googleusercontent.com";
     private static final int RC_SIGN_IN = 1;
-
+    SignInButton loginButton;
     LoginPresenter loginPresenter;
     GoogleApiClient googleApiClient;
 
@@ -32,7 +35,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         super.onCreate(savedInstanceState);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(clientId)
+                .requestEmail()
                 .build();
 
         googleApiClient = new GoogleApiClient.Builder(this)
@@ -41,10 +44,14 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                 .build();
 
         setContentView(R.layout.activity_login);
+
+        loginButton = (SignInButton) findViewById(R.id.login_button);
     }
 
     @Click(R.id.login_button)
     void loginButtonClicked() {
+
+        loginButton.setEnabled(false);
         navigateToSignIn();
     }
 
@@ -53,11 +60,17 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         this.loginPresenter = loginPresenter;
     }
 
-    @OnActivityResult(RC_SIGN_IN)
-    void onResult(Intent data) {
-        Log.d("Login", "onResult");
-        loginPresenter.handleLoginResult(this, Auth.GoogleSignInApi.getSignInResultFromIntent(data));
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            loginPresenter.handleLoginResult(this,result);
+        }
     }
+
 
     private void navigateToSignIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
@@ -73,5 +86,6 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     @Override
     public void showLoginError() {
         Log.d("LoginActivity", "Show error");
+        loginButton.setEnabled(true);
     }
 }
