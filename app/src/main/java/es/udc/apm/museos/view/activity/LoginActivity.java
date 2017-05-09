@@ -5,6 +5,7 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OnActivityResult;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     SignInButton loginButton;
     LoginPresenter loginPresenter;
     GoogleApiClient googleApiClient;
+    ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +48,16 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         setContentView(R.layout.activity_login);
 
         loginButton = (SignInButton) findViewById(R.id.login_button);
+
+        progress = new ProgressDialog(this);
+        progress.setTitle("Login in");
+        progress.setMessage("Wait while loading...");
+        progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
     }
 
     @Click(R.id.login_button)
     void loginButtonClicked() {
-
+        progress.show();
         loginButton.setEnabled(false);
         navigateToSignIn();
     }
@@ -79,12 +86,14 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
     @Override
     public void navigateToARCamera() {
+        progress.dismiss();
         Log.d("LoginActivity", "Navigate to camera");
         startActivity(new Intent(this, ARCameraActivity_.class));
     }
 
     @Override
     public void showLoginError() {
+        progress.dismiss();
         Log.d("LoginActivity", "Show error");
         loginButton.setEnabled(true);
     }

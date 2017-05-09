@@ -12,6 +12,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import com.unity3d.player.UnityPlayer;
@@ -34,12 +36,11 @@ public class ARCameraActivity extends Activity
 		mUnityPlayer = new UnityPlayer(this);
 		setContentView(R.layout.avitivy_arcamera);
 
-		RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.mainARLayout);
+        FrameLayout mainLayout = (FrameLayout) findViewById(R.id.mainARLayout);
 
 		mainLayout.addView(mUnityPlayer);
 
-        Button button = new Button(this);
-        button.setText("Go to map");
+        ImageButton button = (ImageButton) findViewById(R.id.mapButton);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,8 +49,6 @@ public class ARCameraActivity extends Activity
                 startActivity(i);
             }
         });
-
-        mainLayout.addView(button);
 
 		mUnityPlayer.requestFocus();
 	}
