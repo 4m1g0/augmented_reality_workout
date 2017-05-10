@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
+  <Tracking>
+    <ImageTarget name="Barco_de_mariposas-Vladimir_Kush" size="50.000000 37.500000" />
+    <ImageTarget name="Salvador_Dali-La_Persistencia_De_La_Memoria" size="50.000000 36.781250" />
+    <ImageTarget name="Pablo_Picasso-Gernika" size="50.000000 21.722113" />
+    <ImageTarget name="the-starry-night_vangogh" size="50.000000 31.200001" />
+  </Tracking>
+</QCARConfig>
