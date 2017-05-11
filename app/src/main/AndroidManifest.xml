@@ -68,9 +68,11 @@
 
         <activity
             android:screenOrientation="landscape"
-            android:name=".view.activity.MapActivity"
+            android:name=".view.activity.MapActivity_"
             android:label="@string/title_activity_map"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
     </application>
 
 </manifest>

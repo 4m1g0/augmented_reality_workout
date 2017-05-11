@@ -45,7 +45,7 @@ public class ARCameraActivity extends Activity
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(ARCameraActivity.this, MapActivity.class);
+                Intent i = new Intent(ARCameraActivity.this, MapActivity_.class);
                 startActivity(i);
             }
         });
