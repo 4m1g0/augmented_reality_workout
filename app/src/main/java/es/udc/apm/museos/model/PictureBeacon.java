@@ -12,11 +12,14 @@ public class PictureBeacon implements Serializable {
         this.x = x;
         this.y = y;
         this.id = id;
-
+        this.rssi = Integer.MAX_VALUE;
+        this.lastSeen = 0;
     }
 
 
     public int x;
     public int y;
     public String id;
+    public float rssi;
+    public long lastSeen;
 }

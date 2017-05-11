@@ -21,6 +21,20 @@ public class MapActivity extends AppCompatActivity implements MapView {
     private MapPresenter mapPresenter;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        mapPresenter.startDiscovery();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        mapPresenter.stopDiscovery();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
@@ -34,7 +48,7 @@ public class MapActivity extends AppCompatActivity implements MapView {
     }
 
     public void discoveryClick(View view) {
-        mapPresenter.startDiscovery();
+
     }
 
     @Override
