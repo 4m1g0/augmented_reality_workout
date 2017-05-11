@@ -89,6 +89,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         progress.dismiss();
         Log.d("LoginActivity", "Navigate to camera");
         startActivity(new Intent(this, ARCameraActivity_.class));
+        //startActivity(new Intent(this, MapActivity_.class));
     }
 
     @Override

@@ -5,5 +5,7 @@ package es.udc.apm.museos.view;
  */
 
 public interface MapView {
-    void requestBluetoothPermission ();
+    void requestBluetoothPermission();
+    void showErrorAndFinish(String error);
+    void showNotFullySupported();
 }

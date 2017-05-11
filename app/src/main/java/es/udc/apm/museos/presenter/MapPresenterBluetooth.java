@@ -13,13 +13,24 @@ import android.os.Build;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.view.View;
 
 import org.androidannotations.annotations.EBean;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Observer;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import es.udc.apm.museos.R;
+import es.udc.apm.museos.model.PictureBeacon;
 import es.udc.apm.museos.view.MapView;
 
 /**
@@ -32,6 +43,9 @@ public class MapPresenterBluetooth implements MapPresenter {
     private Handler mTimerHandler = new Handler();
     private BluetoothManager BTManager;
     private BluetoothAdapter BTAdapter;
+    private MapView view;
+
+    private List<PictureBeacon> PicturesList = new ArrayList<PictureBeacon>();
 
     @Override
     public void initializeDiscovery(MapView view, Context context) {
@@ -40,6 +54,9 @@ public class MapPresenterBluetooth implements MapPresenter {
         but it seems there is no way to implement bluetooth without breaking some pattern, so until
         someone can tell me how to do it in an other way I'll do it the easiest...
          */
+
+        this.view = view;
+        view.requestBluetoothPermission();
         BTManager = (BluetoothManager)  context.getSystemService(Context.BLUETOOTH_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
@@ -47,10 +64,15 @@ public class MapPresenterBluetooth implements MapPresenter {
         else
             BTAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        if (!BTAdapter.isEnabled())
-            BTAdapter.enable();
+        readPictureList(context);
 
+        /*if (!BTAdapter.isEnabled())
+            BTAdapter.enable();*/
 
+        if (BTAdapter == null){
+            view.showNotFullySupported();
+            return; // the application will still run.
+        }
 
         TimerTask task = new TimerTask() {
             @Override
@@ -66,6 +88,41 @@ public class MapPresenterBluetooth implements MapPresenter {
         context.registerReceiver(receiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
 
         timer.schedule(task, 1, 10000);
+    }
+
+    private void readPictureList(Context context) {
+        String json = null;
+        try {
+            InputStream is = context.getAssets().open("PictureBeacons.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            view.showErrorAndFinish(context.getString(R.string.ErrorReadFile));
+        }
+
+        try {
+            JSONArray m_jArry = new JSONArray(json);
+
+            for (int i = 0; i < m_jArry.length(); i++) {
+                JSONObject jo = m_jArry.getJSONObject(i);
+                PictureBeacon picture = new PictureBeacon(
+                        jo.getInt("x"),
+                        jo.getInt("y"),
+                        jo.getString("id")
+                );
+                
+                PicturesList.add(picture);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            view.showErrorAndFinish(context.getString(R.string.ErrorParsingFile));
+        }
     }
 
     @Override
