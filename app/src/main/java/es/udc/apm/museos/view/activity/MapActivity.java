@@ -3,6 +3,7 @@ package es.udc.apm.museos.view.activity;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,12 +16,14 @@ import org.androidannotations.annotations.EActivity;
 import es.udc.apm.museos.R;
 import es.udc.apm.museos.presenter.MapPresenter;
 import es.udc.apm.museos.presenter.MapPresenterBluetooth;
+import es.udc.apm.museos.view.MapCanvas;
 import es.udc.apm.museos.view.MapView;
 
 @EActivity
 public class MapActivity extends AppCompatActivity implements MapView {
     private static final String TAG = "MapActivity";
     private MapPresenter mapPresenter;
+    private MapCanvas map;
 
     @Override
     protected void onResume() {
@@ -43,16 +46,17 @@ public class MapActivity extends AppCompatActivity implements MapView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
+        ConstraintLayout mainLayout = (ConstraintLayout) findViewById(R.id.mainMapLayout);
+
+        map = new MapCanvas(this);
+        mainLayout.addView(map, -1, -1);
+
         mapPresenter.initializeDiscovery(this, getApplicationContext());
     }
 
     @Bean
     protected void setMapPresenter(MapPresenterBluetooth mapPresenter) {
         this.mapPresenter = mapPresenter;
-    }
-
-    public void discoveryClick(View view) {
-
     }
 
     @Override
