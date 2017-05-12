@@ -1,8 +1,10 @@
 package es.udc.apm.museos.view.activity;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +28,8 @@ public class MapActivity extends AppCompatActivity implements MapView {
 
         mapPresenter.startDiscovery();
     }
+
+    // TODO: http://stackoverflow.com/questions/29014212/how-to-place-pin-mark-image-over-an-image-in-android
 
     @Override
     protected void onPause() {
@@ -62,8 +66,21 @@ public class MapActivity extends AppCompatActivity implements MapView {
 
     @Override
     public void showErrorAndFinish(String error) {
-        // TODO: Implement this correctly, show error and finish app
         Log.e(TAG, "ERROR: " + error);
+
+        new AlertDialog.Builder(this)
+                .setTitle("Error")
+                .setMessage(error)
+                .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                    finish();
+                    System.exit(0);
+                })
+                .setOnDismissListener(dialog -> {
+                    finish();
+                    System.exit(0);
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     @Override
