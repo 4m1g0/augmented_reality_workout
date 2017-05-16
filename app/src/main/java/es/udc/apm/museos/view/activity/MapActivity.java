@@ -13,7 +13,10 @@ import android.view.View;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 
+import java.util.List;
+
 import es.udc.apm.museos.R;
+import es.udc.apm.museos.model.PictureBeacon;
 import es.udc.apm.museos.presenter.MapPresenter;
 import es.udc.apm.museos.presenter.MapPresenterBluetooth;
 import es.udc.apm.museos.view.MapCanvas;
@@ -91,5 +94,10 @@ public class MapActivity extends AppCompatActivity implements MapView {
     public void showNotFullySupported() {
         // TODO: Implement this with a text view informing about the situation
         Log.e(TAG, "ERROR: not fully supported");
+    }
+
+    @Override
+    public void updateMap(List<PictureBeacon> picturesList) {
+        map.updateMarkers(picturesList);
     }
 }

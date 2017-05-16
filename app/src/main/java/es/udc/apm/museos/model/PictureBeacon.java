@@ -2,10 +2,6 @@ package es.udc.apm.museos.model;
 
 import java.io.Serializable;
 
-/**
- * Created by 4m1g0 on 11/05/17.
- */
-
 public class PictureBeacon implements Serializable {
 
     public PictureBeacon(int x, int y, String id) {
@@ -16,6 +12,15 @@ public class PictureBeacon implements Serializable {
         this.lastSeen = 0;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof PictureBeacon))
+            return false;
+
+        PictureBeacon other = (PictureBeacon) obj;
+
+        return x == other.x && y == other.y;
+    }
 
     public int x;
     public int y;

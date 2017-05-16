@@ -1,11 +1,12 @@
 package es.udc.apm.museos.view;
 
-/**
- * Created by 4m1g0 on 11/05/17.
- */
+import java.util.List;
+
+import es.udc.apm.museos.model.PictureBeacon;
 
 public interface MapView {
     void requestBluetoothPermission();
     void showErrorAndFinish(String error);
     void showNotFullySupported();
+    void updateMap(List<PictureBeacon> picturesList);
 }
