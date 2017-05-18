@@ -47,6 +47,7 @@ public class ARCameraActivity extends Activity
             public void onClick(View v) {
                 Intent i = new Intent(ARCameraActivity.this, MapActivity_.class);
                 startActivity(i);
+				finish();
             }
         });
 

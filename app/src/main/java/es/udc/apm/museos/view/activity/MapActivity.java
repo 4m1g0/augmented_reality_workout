@@ -2,6 +2,7 @@ package es.udc.apm.museos.view.activity;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
@@ -9,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
@@ -35,8 +37,6 @@ public class MapActivity extends AppCompatActivity implements MapView {
         mapPresenter.startDiscovery();
     }
 
-    // TODO: http://stackoverflow.com/questions/29014212/how-to-place-pin-mark-image-over-an-image-in-android
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -55,6 +55,17 @@ public class MapActivity extends AppCompatActivity implements MapView {
         mainLayout.addView(map, -1, -1);
 
         mapPresenter.initializeDiscovery(this, getApplicationContext());
+
+        ImageButton button = (ImageButton) findViewById(R.id.arButton);
+        button.bringToFront();
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MapActivity.this, ARCameraActivity_.class);
+                startActivity(i);
+            }
+        });
     }
 
     @Bean

@@ -44,12 +44,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.activity.ARCameraActivity_"
-            android:screenOrientation="landscape">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:screenOrientation="landscape"
+            android:process=":unity">
 
             <meta-data
                 android:name="unityplayer.UnityActivity"

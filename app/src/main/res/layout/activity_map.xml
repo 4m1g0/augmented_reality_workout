@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
+    android:background="@color/white"
     android:id="@+id/mainMapLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -9,4 +10,15 @@
     tools:context="es.udc.apm.museos.view.activity.MapActivity">
 
 
+    <ImageButton
+        android:id="@+id/arButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/ar_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteX="318dp"
+        tools:layout_editor_absoluteY="442dp" />
 </android.support.constraint.ConstraintLayout>
