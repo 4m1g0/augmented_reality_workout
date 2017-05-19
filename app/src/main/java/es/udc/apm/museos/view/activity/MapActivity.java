@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
@@ -103,8 +104,9 @@ public class MapActivity extends AppCompatActivity implements MapView {
 
     @Override
     public void showNotFullySupported() {
-        // TODO: Implement this with a text view informing about the situation
-        Log.e(TAG, "ERROR: not fully supported");
+        TextView errorTv = (TextView) findViewById(R.id.map_textview);
+        errorTv.setVisibility(View.VISIBLE);
+        errorTv.bringToFront();
     }
 
     @Override

@@ -3,4 +3,5 @@
     <string name="title_activity_map">MapActivity</string>
     <string name="ErrorReadFile">It was not possible to read config file.</string>
     <string name="ErrorParsingFile">It was not possible to parse the config file.</string>
+    <string name="error_no_bluetooth">Your device does not support bluetooth. The nearest marker won\'t be shown.</string>
 </resources>

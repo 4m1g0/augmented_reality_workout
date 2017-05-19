@@ -152,13 +152,17 @@ public class MapPresenterBluetooth implements MapPresenter {
 
     private void updateBeaconList(BluetoothDevice device, int rssi) {
         for (PictureBeacon picture: picturesList) {
-            if (System.currentTimeMillis() - picture.lastSeen > 1.5 * (float)60)
-                picture.rssi = Integer.MAX_VALUE;
+            if (System.currentTimeMillis() - picture.lastSeen > 1.5 * (float)60 * 1000)
+                picture.rssi = null;
 
             if (!picture.id.equals(device.getAddress()))
                 continue;
 
-            picture.rssi = (picture.rssi * 2 +  rssi) / 3; // weighted mean
+            if (picture.rssi != null)
+                picture.rssi = (picture.rssi * 2 +  rssi) / 3; // weighted mean
+            else
+                picture.rssi = (float)rssi;
+
             picture.lastSeen = System.currentTimeMillis();
             Log.d(TAG, "FOUND: id: " + picture.id + " RSSI: " + rssi);
 

@@ -35,16 +35,16 @@ public class MapCanvas extends android.support.v7.widget.AppCompatImageView {
         if (markerList == null)
             return;
 
-        float minRssi = Float.MAX_VALUE;
+        float maxRssi = -200f;
 
         for (PictureBeacon marker : markerList)
-            if (marker.rssi < minRssi) minRssi = marker.rssi;
+            if (marker.rssi != null && marker.rssi > maxRssi) maxRssi = marker.rssi;
 
         for (PictureBeacon marker : markerList) {
             Drawable d;
-            if (marker.rssi == Integer.MAX_VALUE)
+            if (marker.rssi == null)
                 d = ContextCompat.getDrawable(getContext(), R.drawable.marker_disabled);
-            else if (marker.rssi == minRssi)
+            else if (marker.rssi == maxRssi)
                 d = ContextCompat.getDrawable(getContext(), R.drawable.marker_near);
             else
                 d = ContextCompat.getDrawable(getContext(), R.drawable.marker_normal);

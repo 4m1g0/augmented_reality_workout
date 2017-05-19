@@ -8,8 +8,8 @@ public class PictureBeacon implements Serializable {
         this.x = x;
         this.y = y;
         this.id = id;
-        this.rssi = Integer.MAX_VALUE;
-        this.lastSeen = 0;
+        this.rssi = null;
+        this.lastSeen = 0L;
     }
 
     @Override
@@ -25,6 +25,6 @@ public class PictureBeacon implements Serializable {
     public int x;
     public int y;
     public String id;
-    public float rssi;
-    public long lastSeen;
+    public Float rssi;
+    public Long lastSeen;
 }
