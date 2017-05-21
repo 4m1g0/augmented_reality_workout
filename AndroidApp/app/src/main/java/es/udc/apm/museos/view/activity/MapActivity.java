@@ -1,8 +1,11 @@
 package es.udc.apm.museos.view.activity;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
@@ -11,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.androidannotations.annotations.Bean;
@@ -22,20 +26,30 @@ import es.udc.apm.museos.R;
 import es.udc.apm.museos.model.PictureBeacon;
 import es.udc.apm.museos.presenter.MapPresenter;
 import es.udc.apm.museos.presenter.MapPresenterBluetooth;
+import es.udc.apm.museos.view.CompassCanvas;
 import es.udc.apm.museos.view.MapCanvas;
 import es.udc.apm.museos.view.MapView;
 
 @EActivity
-public class MapActivity extends AppCompatActivity implements MapView {
+public class MapActivity extends AppCompatActivity implements MapView, SensorEventListener {
     private static final String TAG = "MapActivity";
     private MapPresenter mapPresenter;
     private MapCanvas map;
+    SensorManager mSensorManager;
+    float[] mGravity, mGeomagnetic;
+    float azimut;
+    CompassCanvas compass;
+    Sensor accelerometer,magnetometer;
 
     @Override
     protected void onResume() {
         super.onResume();
 
         mapPresenter.startDiscovery();
+
+        // is sensor does not exists, this bindings do nothing
+        mSensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
+        mSensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_UI);
     }
 
     @Override
@@ -43,6 +57,7 @@ public class MapActivity extends AppCompatActivity implements MapView {
         super.onPause();
 
         mapPresenter.stopDiscovery();
+        mSensorManager.unregisterListener(this);
     }
 
     @Override
@@ -60,6 +75,9 @@ public class MapActivity extends AppCompatActivity implements MapView {
         ImageButton button = (ImageButton) findViewById(R.id.arButton);
         button.bringToFront();
 
+        compass = (CompassCanvas) findViewById(R.id.buttonCompass);
+        compass.bringToFront();
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,6 +85,10 @@ public class MapActivity extends AppCompatActivity implements MapView {
                 startActivity(i);
             }
         });
+
+        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        magnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
     }
 
     @Bean
@@ -112,5 +134,30 @@ public class MapActivity extends AppCompatActivity implements MapView {
     @Override
     public void updateMap(List<PictureBeacon> picturesList) {
         map.updateMarkers(picturesList);
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
+            mGravity = event.values;
+        if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD)
+            mGeomagnetic = event.values;
+        if (mGravity != null && mGeomagnetic != null) {
+            float R[] = new float[9];
+            float I[] = new float[9];
+            boolean success = SensorManager.getRotationMatrix(R, I, mGravity, mGeomagnetic);
+            if (success) {
+                float orientation[] = new float[3];
+                SensorManager.getOrientation(R, orientation);
+                azimut = orientation[0]; // orientation contains: azimut, pitch and roll
+            }
+        }
+
+        compass.setOrientation(azimut);
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 }
