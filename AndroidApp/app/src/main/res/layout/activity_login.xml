@@ -16,4 +16,12 @@
     android:layout_height="wrap_content"
       android:layout_alignParentTop="true"
       android:layout_centerHorizontal="true" />
+
+  <TextView
+      android:id="@+id/error_text"
+      android:layout_width="500dp"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_centerHorizontal="true"
+      android:textColor="@color/red"/>
 </RelativeLayout>

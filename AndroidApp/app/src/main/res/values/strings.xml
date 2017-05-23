@@ -4,4 +4,5 @@
     <string name="ErrorReadFile">It was not possible to read config file.</string>
     <string name="ErrorParsingFile">It was not possible to parse the config file.</string>
     <string name="error_no_bluetooth">Your device does not support bluetooth. The nearest marker won\'t be shown.</string>
+    <string name="error_login">It was not possible to Log In. Please check your network connection.</string>
 </resources>

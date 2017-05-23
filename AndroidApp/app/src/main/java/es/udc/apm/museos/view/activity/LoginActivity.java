@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.TextView;
 
 import es.udc.apm.museos.R;
 import es.udc.apm.museos.presenter.LoginPresenter;
@@ -31,6 +32,13 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     LoginPresenter loginPresenter;
     GoogleApiClient googleApiClient;
     ProgressDialog progress;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        loginButton.setEnabled(true);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,8 +101,12 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
     @Override
     public void showLoginError() {
-        progress.dismiss();
-        Log.d("LoginActivity", "Show error");
-        loginButton.setEnabled(true);
+        runOnUiThread(() -> {
+            progress.dismiss();
+            Log.d("LoginActivity", "Show error");
+            loginButton.setEnabled(true);
+            TextView errorText = (TextView) findViewById(R.id.error_text);
+            errorText.setText(R.string.error_login);
+        });
     }
 }
