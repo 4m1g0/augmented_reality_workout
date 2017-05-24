@@ -13,6 +13,6 @@ public class User {
         this.email = email;
     }
 
-    String name;
-    String email;
+    public String name;
+    public String email;
 }

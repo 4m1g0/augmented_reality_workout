@@ -26,6 +26,7 @@ public class LoginPresenterMock implements LoginPresenter {
             Log.d("LoginPresenter", "GoogleSignIn success");
             try {
                 User user = restClient.userFromGoogleToken(new Token(result.getSignInAccount().getIdToken()));
+                view.saveUser(user);
                 // Initialize the local db with user data!
                 view.navigateToARCamera();
             } catch (RestClientException e) {

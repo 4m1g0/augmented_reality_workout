@@ -6,7 +6,9 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OnActivityResult;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import es.udc.apm.museos.R;
+import es.udc.apm.museos.model.User;
 import es.udc.apm.museos.presenter.LoginPresenter;
 import es.udc.apm.museos.presenter.LoginPresenterMock;
 import es.udc.apm.museos.view.LoginView;
@@ -32,6 +35,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     LoginPresenter loginPresenter;
     GoogleApiClient googleApiClient;
     ProgressDialog progress;
+    SharedPreferences prefs;
 
     @Override
     protected void onResume() {
@@ -43,6 +47,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        prefs = getSharedPreferences("es.udc.apm.museos", Context.MODE_PRIVATE);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -61,6 +67,13 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         progress.setTitle("Login in");
         progress.setMessage("Wait while loading...");
         progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
+
+        String token = prefs.getString("es.udc.apm.museos.email", null);
+
+        if (token != null){
+            navigateToARCamera();
+            return;
+        }
     }
 
     @Click(R.id.login_button)
@@ -108,5 +121,14 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
             TextView errorText = (TextView) findViewById(R.id.error_text);
             errorText.setText(R.string.error_login);
         });
+    }
+
+    @Override
+    public void saveUser(User user) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("es.udc.apm.museos.email", user.email);
+        editor.putString("es.udc.apm.museos.name", user.name);
+
+        editor.apply();
     }
 }
