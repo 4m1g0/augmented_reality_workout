@@ -6,6 +6,7 @@ buildscript {
     dependencies {
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'me.tatarka:gradle-retrolambda:3.5.0'
+
     }
 }
 
@@ -20,12 +21,13 @@ allprojects {
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     signingConfigs {
     }
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "25.0.3"
     defaultConfig {
         applicationId "es.udc.apm.museos"
         minSdkVersion 16
@@ -69,13 +71,13 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.1.1'
+    compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'org.androidannotations:androidannotations-api:4.2.0'
     compile 'org.androidannotations:rest-spring:4.2.0'
-    compile 'com.google.android.gms:play-services-auth:10.0.1'
     compile 'org.springframework.android:spring-android-rest-template:2.0.0.M3'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.5.4'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.google.android.gms:play-services-auth:9.0.0'
     compile 'com.android.support:design:25.3.1'
     testCompile 'junit:junit:4.12'
     apt 'org.androidannotations:rest-spring:4.2.0'

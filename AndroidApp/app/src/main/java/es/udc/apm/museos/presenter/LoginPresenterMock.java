@@ -11,6 +11,7 @@ import es.udc.apm.museos.model.User;
 import es.udc.apm.museos.rest.RestClient;
 import es.udc.apm.museos.view.LoginView;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 
 @EBean
@@ -25,7 +26,8 @@ public class LoginPresenterMock implements LoginPresenter {
         if (result.isSuccess()) {
             Log.d("LoginPresenter", "GoogleSignIn success");
             try {
-                User user = restClient.userFromGoogleToken(new Token(result.getSignInAccount().getIdToken()));
+                GoogleSignInAccount acct = result.getSignInAccount();
+                User user = new User(acct.getDisplayName(), acct.getEmail());
                 view.saveUser(user);
                 // Initialize the local db with user data!
                 view.navigateToARCamera();

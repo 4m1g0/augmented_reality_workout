@@ -1,25 +1,33 @@
 {
   "project_info": {
-    "project_number": "480537394409",
-    "project_id": "app-museos-a93c0"
+    "project_number": "885729355459",
+    "project_id": "app-museos2"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:480537394409:android:9824016e98e761a8",
+        "mobilesdk_app_id": "1:885729355459:android:9824016e98e761a8",
         "android_client_info": {
           "package_name": "es.udc.apm.museos"
         }
       },
       "oauth_client": [
         {
-          "client_id": "480537394409-j1hhqt6i2ie6ffluvn5re59943bi10rk.apps.googleusercontent.com",
+          "client_id": "885729355459-96muj6tadp2jpiir4gpc16okqo6af1la.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "es.udc.apm.museos",
+            "certificate_hash": "175c6873c7a65cc1c232289fe4077a6e3c7308ec"
+          }
+        },
+        {
+          "client_id": "885729355459-tp4n736d8ge6mpmeruh476qniub4l1ej.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBVufONLYmn5dilNCxLqaJsitvDirsikdg"
+          "current_key": "AIzaSyB2Gpv5UVcoBMsPE-7ytRK7G2JjjKA_41I"
         }
       ],
       "services": {
